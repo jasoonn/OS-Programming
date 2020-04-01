@@ -9,6 +9,12 @@
 #include <string.h>
 #include <fcntl.h>
 
+int get_int_len (int value){
+  int l=1;
+  while(value>9){ l++; value/=10; }
+  return l;
+}
+
 int main(int argc, char** argv){
    
    int inputNum = atoi(argv[1]);
@@ -37,8 +43,6 @@ int main(int argc, char** argv){
      return 1;
    }
    else if (pid == 0){
-     char result[50];
-     sprintf(result, "%d", inputNum); 
      while(1){
        if (inputNum == 1){
          sprintf(ptr, "%d", inputNum);
@@ -46,12 +50,12 @@ int main(int argc, char** argv){
        }
        else if (inputNum%2 == 0){
          sprintf(ptr, "%d ", inputNum);
-         ptr+= strlen(result) + 1;
+         ptr+= get_int_len(inputNum) + 1;
          inputNum = inputNum/2;
        }
        else {
          sprintf(ptr, "%d ", inputNum);
-         ptr+= strlen(result) + 1;
+         ptr+= get_int_len(inputNum) + 1;
          inputNum = inputNum*3 + 1;
        }
      }
